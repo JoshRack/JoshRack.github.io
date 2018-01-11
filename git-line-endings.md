@@ -13,17 +13,12 @@ And the result:
 ```/dev/stdin: ASCII text, with CRLF line terminators
 commit 7f60690a2dc1e4e1c0387bcab3dbcd8a0adb1026
 Author: Josh Rack <JoshuaRack@gmail.com>
-Date:   Wed Jan 3 11:10:29 2018 -0600
+Date:   Wed Jan 3 11:10:29 2018 -0600```
 
-    Updated endpoints for API
-
-/dev/stdin: Java source, ASCII text
+```/dev/stdin: Java source, ASCII text
 commit 8e0899cc5f5f47dfb21b5d54ded4adff3c6db387
 Author: Josh Rack <JoshuaRack@gmail.com>
-Date:   Wed Jan 3 09:33:54 2018 -0600
-
-    Refactored
-```
+Date:   Wed Jan 3 09:33:54 2018 -0600```
 
 Notice the `/dev/stdin: ASCII text, with CRLF line terminators`. It was at that check-in that the line endings changed.
 
