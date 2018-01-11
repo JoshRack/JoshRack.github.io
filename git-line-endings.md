@@ -6,7 +6,9 @@ I've been working on a project where I'm developing locally on my Windows 10 wor
 ## Solution
 First, here's a command that'll show some history including line endings that had changed:
 
-`for i in {0..5}; do echo; git show HEAD~$i:server/src/index.tsx | file -; git show -s HEAD~$i; done`
+```bash
+$ for i in {0..5}; do echo; git show HEAD~$i:server/src/index.tsx | file -; git show -s HEAD~$i; done
+```
 
 And the result:
 
