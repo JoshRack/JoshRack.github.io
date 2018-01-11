@@ -10,21 +10,26 @@ First, here's a command that'll show some history including line endings that ha
 
 And the result:
 
-```/dev/stdin: ASCII text, with CRLF line terminators
+```
+/dev/stdin: ASCII text, with CRLF line terminators
 commit 7f60690a2dc1e4e1c0387bcab3dbcd8a0adb1026
 Author: Josh Rack <JoshuaRack@gmail.com>
-Date:   Wed Jan 3 11:10:29 2018 -0600```
+Date:   Wed Jan 3 11:10:29 2018 -0600
+```
 
-```/dev/stdin: Java source, ASCII text
+```
+/dev/stdin: Java source, ASCII text
 commit 8e0899cc5f5f47dfb21b5d54ded4adff3c6db387
 Author: Josh Rack <JoshuaRack@gmail.com>
-Date:   Wed Jan 3 09:33:54 2018 -0600```
+Date:   Wed Jan 3 09:33:54 2018 -0600
+```
 
 Notice the `/dev/stdin: ASCII text, with CRLF line terminators`. It was at that check-in that the line endings changed.
 
 We resolved it in two parts. I learned about a `.gitattributes` file here: https://git-scm.com/docs/gitattributes. There's a section called 'End-of-line conversion'. From a clean working directory:
 
-```$ echo "* text=auto" >.gitattributes
+```bash
+$ echo "* text=auto" >.gitattributes
 $ git read-tree --empty   # Clean index, force re-scan of working directory
 $ git add .
 $ git status        # Show files that will be normalized
