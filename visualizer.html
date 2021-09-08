@@ -1,0 +1,264 @@
+<html>
+<head>
+	<script src="https://d3js.org/d3.v4.min.js"></script>
+</head>
+<body>
+    <div>
+        Red: 
+        <select id='red'>
+            <option value='0'>0</option>
+            <option value='1'>1</option>
+            <option value='2'>2</option>
+            <option value='3'>3</option>
+        </select>
+        Yellow:
+        <select id='yellow'>
+            <option value='0'>0</option>
+            <option value='1'>1</option>
+            <option value='2'>2</option>
+            <option value='3'>3</option>
+        </select>
+        Green:        
+        <select id='green'>
+            <option value='0'>0</option>
+            <option value='1'>1</option>
+            <option value='2'>2</option>
+            <option value='3'>3</option>
+        </select>
+        Purple:
+        <select id='purple'>
+            <option value='0'>0</option>
+            <option value='1'>1</option>
+            <option value='2'>2</option>
+            <option value='3'>3</option>
+        </select>
+        <button id="load">Load Battle</button>
+    </div>
+    <div id="grid"></div>
+    <div><button id="back">Back</button> <button id="next">Next</button> <span id="turnCounter">12</span></div>
+    <div>
+        <h4>Instructions</h4>
+        <ol>
+            <li>In each of the dropdowns, select the Hold for that color creature and click "Load Battle" when all are set</li>
+            <li>Use the next and back buttons to move between turns (match with turn counter in game)</li>
+            <li>Top grid shows the boss' field and movements</li>
+            <li>Center grid (colored rectangles) shows the desired columns to create single unit creatures of each color</li>
+            <li>Bottom grid (colored squares) shows the desired columns to create big unit creatures of each color. For big units, if columns 3-6 are colored, it means the unit should be made in 3-4, 4-5 or 5-6.</li>
+            <li>On each turn, prioritize making units where indicated. If unable to make a match, use the Next button to look ahead and start setting the board for your next turn.</li>
+        </ol>
+    </div>
+    <script type="text/javascript">
+        const boss_locations = [
+            [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+            [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+            [{x:1, y:1}, {x:1, y:2}, {x:2, y:1}, {x:2, y:2}],
+            [{x:1, y:1}, {x:1, y:2}, {x:2, y:1}, {x:2, y:2}],
+            [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+            [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+            [{x:5, y:1}, {x:5, y:2}, {x:6, y:1}, {x:6, y:2}],
+            [{x:5, y:1}, {x:5, y:2}, {x:6, y:1}, {x:6, y:2}],
+            [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+            [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+            [{x:1, y:1}, {x:1, y:2}, {x:2, y:1}, {x:2, y:2}],
+            [{x:1, y:1}, {x:1, y:2}, {x:2, y:1}, {x:2, y:2}],
+        ];
+
+        const portal_locations = [[],[],[],[],[],[],[],[],[],[],[],[]];
+        //const portal_locations = [[{x:2, y:3}, {x:5, y:0}],[{x:2, y:3}, {x:5, y:0}],[{x:2, y:3}, {x:5, y:0}],[{x:2, y:3}, {x:5, y:0}],[{x:2, y:3}, {x:5, y:0}],[{x:2, y:3, active: false}, {x:5, y:0, active: false}],[{x:2, y:3}, {x:5, y:0}],[{x:2, y:3}, {x:5, y:0}],[{x:2, y:3}, {x:5, y:0}],[{x:2, y:3}, {x:5, y:0}],[{x:2, y:3}, {x:5, y:0}],[]];
+        let team = {
+            red: 1,
+            yellow: 2,
+            green: 3,
+            purple: 2
+        };
+
+        function generateGrid(turn) {
+            var data = new Array();
+            var xpos = 1; //starting xpos and ypos at 1 so the stroke will show when we make the grid below
+            var ypos = 1;
+            var width = 50;
+            var height = 50;
+            
+            const boss_turn_loc = boss_locations[turn];
+            const portal_turn_loc = portal_locations[turn];
+            // iterate for rows	
+            for (var row = 0; row < 4; row++) {
+                data.push( new Array() );
+                
+                // iterate for cells/columns inside rows
+                for (var column = 0; column < 8; column++) {
+                    let mark = null;
+                    if (boss_turn_loc.some(loc => loc.x == column && loc.y == row)) {
+                        mark = 'boss';
+                    } else if (portal_turn_loc.some(loc => loc.x == column && loc.y == row)) {
+                        const portal = portal_turn_loc.find(loc => loc.x == column && loc.y == row);
+                        if ('active' in portal && !portal.active) {
+                            mark = 'portal_deactive';
+                        } else {
+                            mark = 'portal';
+                        }
+                    }
+                    data[row].push({
+                        x: xpos,
+                        y: ypos,
+                        width: width,
+                        height: height,
+                        mark: mark
+                    })
+                    // increment the x position. I.e. move it over by 50 (width variable)
+                    xpos += width;
+                }
+                // reset the x position after a row is complete
+                xpos = 1;
+                // increment the y position for the next row. Move it down 50 (height variable)
+                ypos += height;	
+            }
+            
+            xpos = 1;
+            ypos = 255;
+            width = 50;
+            height = 25;
+
+            for (const [key, value] of Object.entries(team)) {
+                let colorRow = new Array();
+                const boss_future_loc = turn + value < boss_locations.length ? boss_locations[turn + value] : null;
+                const portal_future_loc = turn + value < portal_locations.length ? portal_locations[turn + value] : null;
+                for (var column = 0; column < 8; column++) {
+                    let mark = (boss_future_loc !== null && boss_future_loc.some(loc => loc.x == column)) || (portal_future_loc && portal_future_loc.some(loc => loc.x == column && !('active' in loc)));
+                    colorRow.push({
+                        x: xpos,
+                        y: ypos,
+                        width: width,
+                        height: height,
+                        mark: mark ? key : null
+                    })
+                    // increment the x position. I.e. move it over by 50 (width variable)
+                    xpos += width;
+                }
+                data.push(colorRow);
+                // reset the x position after a row is complete
+                xpos = 1;
+                // increment the y position for the next row. Move it down 50 (height variable)
+                ypos += height;	
+            }
+
+            xpos = 1;
+            ypos = 380;
+            width = 50;
+            height = 50;
+
+            for (const [key, value] of Object.entries(team)) {
+                let colorRow = new Array();
+                let v = value + 1 <= 3 ? value + 1 : 3;
+                const boss_future_loc = turn + v < boss_locations.length ? boss_locations[turn + v] : null;
+                const portal_future_loc = turn + v < portal_locations.length ? portal_locations[turn + v] : null;
+                for (var column = 0; column < 8; column++) {
+                    let columns = [column - 1, column, column + 1];
+                    let mark = (boss_future_loc !== null && boss_future_loc.some(loc => columns.includes(loc.x))) || (portal_future_loc && portal_future_loc.some(loc => columns.includes(loc.x) && !('active' in loc)));
+                    colorRow.push({
+                        x: xpos,
+                        y: ypos,
+                        width: width,
+                        height: height,
+                        mark: mark ? key : null
+                    })
+                    // increment the x position. I.e. move it over by 50 (width variable)
+                    xpos += width;
+                }
+                data.push(colorRow);
+                // reset the x position after a row is complete
+                xpos = 1;
+                // increment the y position for the next row. Move it down 50 (height variable)
+                ypos += height;	
+            }
+
+            return data;
+        }
+
+        const grid = d3.select("#grid")
+            .append("svg")
+            .attr("width","408px")
+            .attr("height","600px");
+
+        function draw(data) {
+            grid.selectAll('.row').remove();
+
+            var row = grid.selectAll(".row")
+                .data(data)
+                .enter().append("g")
+                .attr("class", "row");
+                
+            row.selectAll(".square")
+                .data(function(d) { return d; })
+                .enter().append("rect")
+                .attr("class","square")
+                .attr("x", function(d) { return d.x; })
+                .attr("y", function(d) { return d.y; })
+                .attr("width", function(d) { return d.width; })
+                .attr("height", function(d) { return d.height; })
+                .style("fill", function(d) {
+                    switch (d.mark) {
+                        case 'boss':
+                            return "#0077b6";
+                        case 'portal':
+                            return "#fbb13c";
+                        case 'portal_deactive':
+                            return "#999999";
+                        case 'red':
+                            return "#ea3546";
+                        case 'yellow':
+                            return "#f9c80e";
+                        case 'green':
+                            return "#007f5f";
+                        case 'purple':
+                            return "#662e9b";
+                        default:
+                            return "#FFF";
+                    }})
+                .style("stroke", "#eee");
+        }
+
+        let currentIndex, gridData;
+
+        d3.select("#load")
+            .on("click", function () {
+                team.red = parseInt(document.getElementById('red').value);
+                team.yellow = parseInt(document.getElementById('yellow').value);
+                team.green = parseInt(document.getElementById('green').value);
+                team.purple = parseInt(document.getElementById('purple').value);
+
+                currentIndex = 0;
+                gridData = generateGrid(currentIndex);
+                draw(gridData);
+
+                // I like to log the data to the console for quick debugging
+                console.log(gridData);
+            });
+
+
+        d3.select("#next")
+            .on("click", function () {
+                if (currentIndex + 1 < 12) {
+                    currentIndex += 1;
+                    document.getElementById('turnCounter').innerText = 12 - currentIndex;
+                    gridData = generateGrid(currentIndex);
+                    draw(gridData);
+                }
+            });
+
+        d3.select("#back")
+            .on("click", function () {
+                if (currentIndex > 0) {
+                    currentIndex -= 1;
+                    document.getElementById('turnCounter').innerText = 12 - currentIndex;
+                    gridData = generateGrid(currentIndex);
+                    draw(gridData);
+                }
+            });
+
+
+            
+
+    </script>
+</body>
+</html>
