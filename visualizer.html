@@ -4,6 +4,21 @@
 </head>
 <body>
     <div>
+        Boss:
+        <select id='boss'>
+            <option value='logar'>Logar</option>
+            <option value='kolger'>Kolger</option>
+            <option value='gormr'>Gormr</option>
+            <option value='lokvar-r1'>Lokvar (R1)</option>
+            <option value='lokvar-r2'>Lokvar (R2)</option>
+            <option value='tolir-r1'>Tolir (R1)</option>
+            <option value='tolir-r2'>Tolir (R2)</option>
+            <option value='verkir'>Verkir</option>
+            <option value='eitri'>Eitri</option>
+            <option value='pyntir'>Pyntir</option>
+            <option value='halfar'>Halfar</option>
+            <option value='golur'>Golur</option>
+        </select>
         Red: 
         <select id='red'>
             <option value='0'>0</option>
@@ -48,23 +63,215 @@
         </ol>
     </div>
     <script type="text/javascript">
-        const boss_locations = [
-            [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
-            [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
-            [{x:1, y:1}, {x:1, y:2}, {x:2, y:1}, {x:2, y:2}],
-            [{x:1, y:1}, {x:1, y:2}, {x:2, y:1}, {x:2, y:2}],
-            [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
-            [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
-            [{x:5, y:1}, {x:5, y:2}, {x:6, y:1}, {x:6, y:2}],
-            [{x:5, y:1}, {x:5, y:2}, {x:6, y:1}, {x:6, y:2}],
-            [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
-            [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
-            [{x:1, y:1}, {x:1, y:2}, {x:2, y:1}, {x:2, y:2}],
-            [{x:1, y:1}, {x:1, y:2}, {x:2, y:1}, {x:2, y:2}],
-        ];
+        const boss_map = {
+            "logar": {
+                "boss": [
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:5, y:1}, {x:5, y:2}, {x:6, y:1}, {x:6, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:1, y:1}, {x:1, y:2}, {x:2, y:1}, {x:2, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:5, y:1}, {x:5, y:2}, {x:6, y:1}, {x:6, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:1, y:1}, {x:1, y:2}, {x:2, y:1}, {x:2, y:2}],
+                ],
+                "portal": [[],[],[],[],[],[],[],[],[],[],[],[]]
+            },
+            "kolger": {
+                "boss": [
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:5, y:1}, {x:5, y:2}, {x:6, y:1}, {x:6, y:2}],
+                    [{x:5, y:1}, {x:5, y:2}, {x:6, y:1}, {x:6, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:1, y:1}, {x:1, y:2}, {x:2, y:1}, {x:2, y:2}],
+                    [{x:1, y:1}, {x:1, y:2}, {x:2, y:1}, {x:2, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:5, y:1}, {x:5, y:2}, {x:6, y:1}, {x:6, y:2}],
+                    [{x:5, y:1}, {x:5, y:2}, {x:6, y:1}, {x:6, y:2}],
+                ],
+                "portal": [[],[],[],[],[],[],[],[],[],[],[],[]]
+            },
+            "gormr": {
+                "boss": [
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:5, y:1}, {x:5, y:2}, {x:6, y:1}, {x:6, y:2}],
+                    [{x:5, y:1}, {x:5, y:2}, {x:6, y:1}, {x:6, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:1, y:1}, {x:1, y:2}, {x:2, y:1}, {x:2, y:2}],
+                    [{x:1, y:1}, {x:1, y:2}, {x:2, y:1}, {x:2, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:5, y:1}, {x:5, y:2}, {x:6, y:1}, {x:6, y:2}],
+                    [{x:5, y:1}, {x:5, y:2}, {x:6, y:1}, {x:6, y:2}],
+                ],
+                "portal": [[],[],[],[],[],[],[],[],[],[],[],[]]
+            },
+            "lokvar-r1": {
+                "boss": [
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:5, y:1}, {x:5, y:2}, {x:6, y:1}, {x:6, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:1, y:1}, {x:1, y:2}, {x:2, y:1}, {x:2, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:5, y:1}, {x:5, y:2}, {x:6, y:1}, {x:6, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:1, y:1}, {x:1, y:2}, {x:2, y:1}, {x:2, y:2}],
+                ],
+                "portal": [[{x:2, y:3, active: false}, {x:5, y:3, active: false}],[{x:2, y:3, active: false}, {x:5, y:3, active: false}],[{x:2, y:3, active: false}, {x:5, y:3, active: false}],[{x:2, y:3, active: false}, {x:5, y:3, active: false}],[{x:2, y:3, active: false}, {x:5, y:3, active: false}],[{x:2, y:3, active: false}, {x:5, y:3, active: false}],[{x:2, y:3, active: false}, {x:5, y:3, active: false}],[{x:2, y:3, active: false}, {x:5, y:3, active: false}],[{x:2, y:3, active: false}, {x:5, y:3, active: false}],[{x:2, y:3, active: false}, {x:5, y:3, active: false}],[{x:2, y:3, active: false}, {x:5, y:3, active: false}],[{x:2, y:3, active: false}, {x:5, y:3, active: false}]]
+            },
+            "lokvar-r2": {
+                "boss": [
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:5, y:1}, {x:5, y:2}, {x:6, y:1}, {x:6, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:1, y:1}, {x:1, y:2}, {x:2, y:1}, {x:2, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:5, y:1}, {x:5, y:2}, {x:6, y:1}, {x:6, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:1, y:1}, {x:1, y:2}, {x:2, y:1}, {x:2, y:2}],
+                ],
+                "portal": [[{x:2, y:3}, {x:5, y:3}],[{x:2, y:3}, {x:5, y:3}],[{x:2, y:3}, {x:5, y:3}],[{x:2, y:3}, {x:5, y:3}],[{x:2, y:3}, {x:5, y:3}],[{x:2, y:3, active: false}, {x:5, y:3, active: false}],[{x:2, y:3}, {x:5, y:3}],[{x:2, y:3}, {x:5, y:3}],[{x:2, y:3}, {x:5, y:3}],[{x:2, y:3}, {x:5, y:3}],[{x:2, y:3}, {x:5, y:3}],[{x:2, y:3, active: false}, {x:5, y:3, active: false}]]
+            },
+            "tolir-r1": {
+                "boss": [
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:1, y:1}, {x:1, y:2}, {x:2, y:1}, {x:2, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:5, y:1}, {x:5, y:2}, {x:6, y:1}, {x:6, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:1, y:1}, {x:1, y:2}, {x:2, y:1}, {x:2, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                ],
+                "portal": [[{x:2, y:3, active: false}],[{x:2, y:3, active: false}],[{x:2, y:3, active: false}],[{x:2, y:3, active: false}],[{x:2, y:3, active: false}],[{x:2, y:3, active: false}],[{x:2, y:3, active: false}],[{x:2, y:3, active: false}],[{x:2, y:3, active: false}],[{x:2, y:3, active: false}],[{x:2, y:3, active: false}],[{x:2, y:3, active: false}]]
+            },
+            "tolir-r2": {
+                "boss": [
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:1, y:1}, {x:1, y:2}, {x:2, y:1}, {x:2, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:5, y:1}, {x:5, y:2}, {x:6, y:1}, {x:6, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:1, y:1}, {x:1, y:2}, {x:2, y:1}, {x:2, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                ],
+                "portal": [[{x:2, y:3}, {x:5, y:0}],[{x:2, y:3}, {x:5, y:0}],[{x:2, y:3}, {x:5, y:0}],[{x:2, y:3}, {x:5, y:0}],[{x:2, y:3}, {x:5, y:0}],[{x:2, y:3, active: false}],[{x:2, y:3}, {x:5, y:0}],[{x:2, y:3}, {x:5, y:0}],[{x:2, y:3}, {x:5, y:0}],[{x:2, y:3}, {x:5, y:0}],[{x:2, y:3}, {x:5, y:0}],[{x:2, y:3, active: false}]]
+            },
+            "verkir": {
+                "boss": [
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:1, y:1}, {x:1, y:2}, {x:2, y:1}, {x:2, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:5, y:1}, {x:5, y:2}, {x:6, y:1}, {x:6, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:1, y:1}, {x:1, y:2}, {x:2, y:1}, {x:2, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                ],
+                "portal": [[{x:2, y:3}, {x:5, y:0}],[{x:2, y:3}, {x:5, y:0}],[{x:2, y:3}, {x:5, y:0}],[{x:2, y:3}, {x:5, y:0}],[{x:2, y:3}, {x:5, y:0}],[{x:2, y:3, active: false}],[{x:2, y:3}, {x:5, y:0}],[{x:2, y:3}, {x:5, y:0}],[{x:2, y:3}, {x:5, y:0}],[{x:2, y:3}, {x:5, y:0}],[{x:2, y:3}, {x:5, y:0}],[{x:2, y:3, active: false}]]
+            },
+            "eitri": {
+                "boss": [
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:1, y:1}, {x:1, y:2}, {x:2, y:1}, {x:2, y:2}],
+                    [{x:1, y:1}, {x:1, y:2}, {x:2, y:1}, {x:2, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:5, y:1}, {x:5, y:2}, {x:6, y:1}, {x:6, y:2}],
+                    [{x:5, y:1}, {x:5, y:2}, {x:6, y:1}, {x:6, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:1, y:1}, {x:1, y:2}, {x:2, y:1}, {x:2, y:2}],
+                    [{x:1, y:1}, {x:1, y:2}, {x:2, y:1}, {x:2, y:2}],
+                ],
+                "portal": [[],[],[],[],[],[],[],[],[],[],[],[]]
+            },
+            "pyntir": {
+                "boss": [
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:5, y:1}, {x:5, y:2}, {x:6, y:1}, {x:6, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:1, y:1}, {x:1, y:2}, {x:2, y:1}, {x:2, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:5, y:1}, {x:5, y:2}, {x:6, y:1}, {x:6, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:1, y:1}, {x:1, y:2}, {x:2, y:1}, {x:2, y:2}],
+                ],
+                "portal": [[{x:0, y:0}, {x:7, y:0}],[{x:0, y:0}, {x:7, y:0}],[{x:0, y:0}, {x:7, y:0}],[{x:0, y:0}, {x:7, y:0}],[{x:0, y:0}, {x:7, y:0}],[],[{x:0, y:0}, {x:7, y:0}],[{x:0, y:0}, {x:7, y:0}],[{x:0, y:0}, {x:7, y:0}],[{x:0, y:0}, {x:7, y:0}],[{x:0, y:0}, {x:7, y:0}],[]]
+            },
+            "halfar": {
+                "boss": [
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:5, y:1}, {x:5, y:2}, {x:6, y:1}, {x:6, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:1, y:1}, {x:1, y:2}, {x:2, y:1}, {x:2, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:5, y:1}, {x:5, y:2}, {x:6, y:1}, {x:6, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:1, y:1}, {x:1, y:2}, {x:2, y:1}, {x:2, y:2}],
+                ],
+                "portal": [[],[],[],[],[],[],[],[],[],[],[],[]]
+            },
+            "golur": {
+                "boss": [
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:2, y:1}, {x:2, y:2}, {x:3, y:1}, {x:3, y:2}],
+                    [{x:2, y:1}, {x:2, y:2}, {x:3, y:1}, {x:3, y:2}],
+                    [{x:1, y:1}, {x:1, y:2}, {x:2, y:1}, {x:2, y:2}],
+                    [{x:1, y:1}, {x:1, y:2}, {x:2, y:1}, {x:2, y:2}],
+                    [{x:2, y:1}, {x:2, y:2}, {x:3, y:1}, {x:3, y:2}],
+                    [{x:2, y:1}, {x:2, y:2}, {x:3, y:1}, {x:3, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:3, y:1}, {x:3, y:2}, {x:4, y:1}, {x:4, y:2}],
+                    [{x:4, y:1}, {x:4, y:2}, {x:5, y:1}, {x:5, y:2}],
+                    [{x:4, y:1}, {x:4, y:2}, {x:5, y:1}, {x:5, y:2}],
+                ],
+                "portal": [[],[],[],[],[],[],[],[],[],[],[],[]]
+            },
+        }
+        let boss_locations = [];
+        let portal_locations = [];
 
-        const portal_locations = [[],[],[],[],[],[],[],[],[],[],[],[]];
-        //const portal_locations = [[{x:2, y:3}, {x:5, y:0}],[{x:2, y:3}, {x:5, y:0}],[{x:2, y:3}, {x:5, y:0}],[{x:2, y:3}, {x:5, y:0}],[{x:2, y:3}, {x:5, y:0}],[{x:2, y:3, active: false}, {x:5, y:0, active: false}],[{x:2, y:3}, {x:5, y:0}],[{x:2, y:3}, {x:5, y:0}],[{x:2, y:3}, {x:5, y:0}],[{x:2, y:3}, {x:5, y:0}],[{x:2, y:3}, {x:5, y:0}],[]];
         let team = {
             red: 1,
             yellow: 2,
@@ -121,10 +328,10 @@
 
             for (const [key, value] of Object.entries(team)) {
                 let colorRow = new Array();
-                const boss_future_loc = turn + value < boss_locations.length ? boss_locations[turn + value] : null;
-                const portal_future_loc = turn + value < portal_locations.length ? portal_locations[turn + value] : null;
+                const boss_future_loc = turn + value < boss_locations.length ? boss_locations[turn + value] : [];
+                const portal_future_loc = turn + value < portal_locations.length ? portal_locations[turn + value] : [];
                 for (var column = 0; column < 8; column++) {
-                    let mark = (boss_future_loc !== null && boss_future_loc.some(loc => loc.x == column)) || (portal_future_loc && portal_future_loc.some(loc => loc.x == column && !('active' in loc)));
+                    let mark = ((boss_future_loc.some(loc => loc.x == column)) && !(portal_future_loc.some(loc => column == loc.x && ('active' in loc)))) || (portal_future_loc && portal_future_loc.some(loc => loc.x == column && !('active' in loc)));
                     colorRow.push({
                         x: xpos,
                         y: ypos,
@@ -150,11 +357,11 @@
             for (const [key, value] of Object.entries(team)) {
                 let colorRow = new Array();
                 let v = value + 1 <= 3 ? value + 1 : 3;
-                const boss_future_loc = turn + v < boss_locations.length ? boss_locations[turn + v] : null;
-                const portal_future_loc = turn + v < portal_locations.length ? portal_locations[turn + v] : null;
+                const boss_future_loc = turn + v < boss_locations.length ? boss_locations[turn + v] : [];
+                const portal_future_loc = turn + v < portal_locations.length ? portal_locations[turn + v] : [];
                 for (var column = 0; column < 8; column++) {
-                    let columns = [column - 1, column, column + 1];
-                    let mark = (boss_future_loc !== null && boss_future_loc.some(loc => columns.includes(loc.x))) || (portal_future_loc && portal_future_loc.some(loc => columns.includes(loc.x) && !('active' in loc)));
+                    let columns = [column - 1, column, column + 1].filter(c => !(portal_future_loc.some(loc => c == loc.x && ('active' in loc))))
+                    let mark = (boss_future_loc.some(loc => columns.includes(column) && columns.includes(loc.x)) && !(portal_future_loc.some(loc => column == loc.x && ('active' in loc)))) || (portal_future_loc && portal_future_loc.some(loc => columns.includes(loc.x) && !('active' in loc)));
                     colorRow.push({
                         x: xpos,
                         y: ypos,
@@ -222,6 +429,9 @@
 
         d3.select("#load")
             .on("click", function () {
+                let boss = document.getElementById('boss').value;
+                boss_locations = boss_map[boss]['boss'];
+                portal_locations = boss_map[boss]['portal'];
                 team.red = parseInt(document.getElementById('red').value);
                 team.yellow = parseInt(document.getElementById('yellow').value);
                 team.green = parseInt(document.getElementById('green').value);
